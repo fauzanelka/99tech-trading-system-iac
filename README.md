@@ -57,6 +57,135 @@ Key components:
 - CloudWatch monitoring and logging
 - AWS Config and Security Hub for compliance
 
+## Service Choices and Alternatives
+
+### Frontend & API Layer
+**CloudFront CDN**
+- Purpose: Deliver static content with low latency globally
+- Benefits: Edge caching, DDoS protection, SSL/TLS termination
+- Alternatives considered:
+  - Cloudflare (Third-party CDN, but prefer AWS native integration)
+  - Akamai (Enterprise solution, higher cost)
+
+**API Gateway**
+- Purpose: API management, request throttling, and authentication
+- Benefits: Native AWS integration, WebSocket support
+- Alternatives considered:
+  - Kong (More complex to manage)
+  - Application Load Balancer (Lacks API-specific features)
+
+**AWS WAF**
+- Purpose: Protect applications from web exploits
+- Benefits: Integration with CloudFront and ALB
+- Alternatives considered:
+  - ModSecurity (Requires self-management)
+  - Cloudflare WAF (Vendor lock-in concerns)
+
+### Authentication & Security
+**Amazon Cognito**
+- Purpose: User authentication and authorization
+- Benefits: OAuth2/OIDC support, social identity federation
+- Alternatives considered:
+  - Auth0 (Higher cost at scale)
+  - Keycloak (Self-managed complexity)
+
+**AWS Shield & WAF**
+- Purpose: DDoS protection and application firewall
+- Benefits: Integrated protection for AWS resources
+- Alternatives considered:
+  - Cloudflare (Additional complexity in DNS management)
+  - Imperva (Higher cost)
+
+### Core Trading System
+**Redis Cluster (ElastiCache)**
+- Purpose: High-performance matching engine, caching
+- Benefits: Sub-millisecond latency, in-memory processing
+- Alternatives considered:
+  - Apache Ignite (Complex cluster management)
+  - Aerospike (Higher licensing costs)
+
+**Aurora PostgreSQL**
+- Purpose: Persistent storage for order and account data
+- Benefits: MySQL/PostgreSQL compatibility, auto-scaling
+- Alternatives considered:
+  - CockroachDB (Higher operational complexity)
+  - MongoDB (Less suitable for financial transactions)
+
+**Kinesis Streams**
+- Purpose: Real-time market data and order processing
+- Benefits: Sub-second latency, massive scalability
+- Alternatives considered:
+  - Apache Kafka (Self-managed complexity)
+  - RabbitMQ (Limited scalability)
+
+**DynamoDB**
+- Purpose: Trade ledger and real-time data access
+- Benefits: Single-digit millisecond latency, auto-scaling
+- Alternatives considered:
+  - Apache Cassandra (Complex operations)
+  - MongoDB (Less predictable performance)
+
+### Analytics & Processing
+**AWS Glue**
+- Purpose: ETL jobs for market data processing
+- Benefits: Serverless, managed Apache Spark
+- Alternatives considered:
+  - Apache Airflow (Operational overhead)
+  - Apache NiFi (Complex setup)
+
+**Amazon OpenSearch**
+- Purpose: Market data analysis and search
+- Benefits: Real-time analytics, visualization
+- Alternatives considered:
+  - Elasticsearch (Self-managed complexity)
+  - Splunk (Higher costs)
+
+### DevOps & Monitoring
+**EKS**
+- Purpose: Container orchestration for microservices
+- Benefits: Managed Kubernetes, AWS integration
+- Alternatives considered:
+  - ECS (Less flexibility)
+  - Self-managed Kubernetes (Higher operational overhead)
+
+**AWS X-Ray**
+- Purpose: Distributed tracing
+- Benefits: Native AWS integration, service map
+- Alternatives considered:
+  - Jaeger (Additional operational complexity)
+  - Datadog (Higher cost at scale)
+
+**CloudWatch**
+- Purpose: Monitoring and observability
+- Benefits: Native AWS integration, custom metrics
+- Alternatives considered:
+  - Prometheus + Grafana (Additional management overhead)
+  - New Relic (Cost concerns at scale)
+
+### CI/CD Pipeline
+**CodePipeline/CodeBuild/CodeDeploy**
+- Purpose: Automated build and deployment
+- Benefits: Deep AWS integration, managed services
+- Alternatives considered:
+  - Jenkins (Self-managed complexity)
+  - GitLab CI (Additional infrastructure needed)
+
+### Storage
+**S3**
+- Purpose: Long-term data storage and archival
+- Benefits: Infinite scale, multiple storage tiers
+- Alternatives considered:
+  - MinIO (Self-managed complexity)
+  - Azure Blob Storage (Multi-cloud complexity)
+
+Each service was selected based on:
+- Performance requirements
+- Operational overhead
+- Cost efficiency
+- Integration capabilities
+- Regulatory compliance needs
+- Team expertise
+
 ## Repository Structure
 
 ```
